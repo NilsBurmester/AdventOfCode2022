@@ -44,9 +44,9 @@ sub common {
             $char2 = substr($secondRucksack, $j, 1);
 
             for my $x (0 .. length($thirdRucksack) - 1) {
-            $char3 = substr($thirdRucksack, $x, 1);
+                $char3 = substr($thirdRucksack, $x, 1);
 
-            if ($char3 eq $char2 && $char2 eq $char1) {return $char3;}
+                if ($char3 eq $char2 && $char2 eq $char1) {return $char3;}
             }
         }
     }
