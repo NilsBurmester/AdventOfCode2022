@@ -15,31 +15,39 @@ my %priorities =    ("a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5, "f" => 6,
                      "W" => 49, "X" => 50, "Y" => 51, "Z" => 52); 
 my $prioritySum = 0;
 
-foreach (@contents) {
-        chomp $_;
-        my $length = length($_);
-        my $firstCompartment = substr($_, 0, $length/2);
-        my $secondCompartment = substr($_, $length/2, $length/2);
-        my $common = common($firstCompartment, $secondCompartment);
+for my $i (0 .. scalar(@contents) - 1) {
+    if ($i <= (scalar(@contents - 1)) - 2) {
+        chomp $contents[$i];
+        chomp $contents[$i + 1];
+        chomp $contents[$i + 2];
+        if ($i % 3 == 0) {
+            my $badge = common($contents[$i], $contents[$i + 1], $contents[$i + 2]);
+            $prioritySum += $priorities{$badge};
+        }    
+    }
 
-        $prioritySum += $priorities{$common};
 }
+
 print $prioritySum;
 
+
 sub common {
-   (my $firstHalf, my $secondHalf) = @_; 
-    my $length1 = length($firstHalf) - 1;
+   (my $firstRucksack, my $secondRucksack, my $thirdRucksack) = @_; 
     my $char1 = "";
     my $char2 = "";
+    my $char3 = "";
 
-    for my $i (0 .. $length1) {
-        $char1 = substr($firstHalf, $i, 1);
+    for my $i (0 .. length($firstRucksack) - 1) {
+        $char1 = substr($firstRucksack, $i, 1);
 
-        for my $j (0 .. $length1) {
-            $char2 = substr($secondHalf, $j, 1);
+        for my $j (0 .. length($secondRucksack) - 1) {
+            $char2 = substr($secondRucksack, $j, 1);
 
-            if ($char1 eq $char2) {return $char2;}
+            for my $x (0 .. length($thirdRucksack) - 1) {
+            $char3 = substr($thirdRucksack, $x, 1);
+
+            if ($char3 eq $char2 && $char2 eq $char1) {return $char3;}
+            }
         }
     }
 }
-
